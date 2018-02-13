@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="MR2-oi-iy9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -50,7 +50,7 @@
         <!--Item 2-->
         <scene sceneID="cg9-BS-mNa">
             <objects>
-                <viewController id="RaC-aQ-voo" sceneMemberID="viewController">
+                <viewController id="RaC-aQ-voo" customClass="FavoritesViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3Xq-zs-utd"/>
                         <viewControllerLayoutGuide type="bottom" id="lqU-Nz-P0n"/>
@@ -69,7 +69,7 @@
         <!--Item 1-->
         <scene sceneID="xkg-8b-FMd">
             <objects>
-                <viewController id="3hT-u1-OEK" sceneMemberID="viewController">
+                <viewController id="3hT-u1-OEK" customClass="SearchViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WEf-HX-b6P"/>
                         <viewControllerLayoutGuide type="bottom" id="4ZS-Qj-eiU"/>
@@ -88,10 +88,10 @@
             </objects>
             <point key="canvasLocation" x="879" y="116"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--View Controller-->
         <scene sceneID="Uxl-Qf-mAV">
             <objects>
-                <tabBarController id="fJS-Ao-UK0" sceneMemberID="viewController">
+                <tabBarController id="fJS-Ao-UK0" customClass="ViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="VcG-yx-9vh"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="X6a-7a-3BZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
