@@ -16,11 +16,16 @@ class SearchButtonsCell: UICollectionViewCell {
         super.awakeFromNib()
         
         button = UIButton(frame: contentView.frame)
-        button.backgroundColor = .red
         button.layer.cornerRadius = 10
         
         contentView.addSubview(button)
         
+    }
+    
+    func setButton(num: Int) {
+        let strName = "\(num)"
+        let image = UIImage(named: strName)
+        self.button.setImage(image, for: .normal)
     }
     
     
