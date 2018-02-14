@@ -16,16 +16,34 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setUpCollectionView()
+        setUpNavBar()
+    }
+    
+    func setUpNavBar() {
+        let bgColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
+        navigationController?.navigationBar.barTintColor = bgColor
+        
+        let image = UIImage(named: "search")
+        let leftBarButtonIcon = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(searchIconPressed))
+        self.tabBarController?.navigationItem.leftBarButtonItem = leftBarButtonIcon
+        
+        
+    }
+    
+    func searchIconPressed() {
+     print("pressed")
     }
     
     func setUpCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.sectionInset = UIEdgeInsets(top: -30, left: 5, bottom: 5, right: 5)
         layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 5
         collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = .white
+        let bgColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
+        collectionView.backgroundColor = bgColor
         collectionView.register(SearchButtonsCell.self, forCellWithReuseIdentifier: "button")
         view.addSubview(collectionView)
     }
@@ -56,7 +74,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width / 3.0) - 10
+        let width = (view.frame.width / 3.0) - (20 / 3)
         let height = width
         return CGSize(width: width, height: height)
     }
