@@ -15,12 +15,13 @@
 //
 
 import UIKit
+import SafariServices
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewControllerDelegate{
+    //Pokemon Display Information
+    var pokemon : Pokemon!
     var pokeImage : UIImageView!
     var typeImage : UIImageView!
-    var divider : UILabel!
-    var botHalf : UILabel!
     var pokeName : UILabel!
     var pokeNum : UILabel!
     var pokeHP : UILabel!
@@ -33,19 +34,64 @@ class ProfileViewController: UIViewController {
     var pokeType1 : UILabel!
     var pokeType2 : UILabel!
     var pokeSpecies : UILabel!
+    
+    //UI Set Up
+    var divider : UILabel!
+    var botHalf : UILabel!
+    var pokeURL : String!
     var addFavButton : UIButton!
     var toWebButton : UIButton!
+    
+    //Dynamic Color Selection
+    var navColor : UIColor!
+    var typeColor1: UIColor!
+    var typeColor2: UIColor!
+    var navBarDynamicColor: UIColor!
+    
+    //set typecolor1 to corresp color if pokemon.types[0] == colors[pokemon.types[0]], if pokemon.types.count > 1 then do same for pokemon.types[1], then in setupTypeLabel use typeColor1 and 2
+    //
+    let colors = ["Fire": UIColor.red,
+                  "Water": UIColor.blue,
+                  "Flying": UIColor.blue,
+                  "Bug": UIColor.blue,
+                  "Dark": UIColor.blue,
+                  "Grass": UIColor.blue,
+                  "Ground": UIColor.blue,
+                  "Rock": UIColor.blue,
+                  "Ghost": UIColor.blue,
+                  "Ice": UIColor.blue,
+                  "Electric": UIColor.blue,
+                  "Fairy": UIColor.blue,
+                  "Poison": UIColor.blue,
+                  "Fighting": UIColor.blue,
+                  "Normal": UIColor.blue,
+                  "Dragon": UIColor.blue,
+                  "Steel": UIColor.blue,
+                  "Psychic": UIColor.blue,]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
         createPokeImage()
-        createPokeBioView()
+        //createPokeBioView()
         createFavButton()
         createWebButton()
-        createPokeStatsView()
-        //createPokeTypeImage()
-        self.title = "Charizard"
+        //createPokeStatsView()
+        self.title = "pokemon.name"
+    }
+    
+    @objc func setUpWebView(){
+        let urlString = "https://www.google.com"
+        
+        if let url = URL(string: urlString) {
+            let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+            vc.delegate = self
+            present(vc, animated: true)
+        }
+    }
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        dismiss(animated: true)
     }
     
     func setUpUI(){
@@ -55,6 +101,7 @@ class ProfileViewController: UIViewController {
              NSFontAttributeName: UIFont(name: "Helvetica Neue", size: 21)]
         view.backgroundColor = .white
         
+        //Design
         divider = UILabel(frame: CGRect(x: 0, y: 320, width: view.frame.width, height: 40))
         divider.backgroundColor = .red
         divider.text = "Pokedex Data"
@@ -62,14 +109,11 @@ class ProfileViewController: UIViewController {
         divider.textColor = .white
         divider.textAlignment = .center
         view.addSubview(divider)
-        
-        
+
         botHalf = UILabel(frame: CGRect(x: 0, y: 360, width: view.frame.width, height: view.frame.height/2))
         botHalf.backgroundColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
         view.addSubview(botHalf)
         
-        
-        //Pseudo Tab Bar
         let tabBar = UILabel(frame: CGRect(x: 0, y: view.frame.height - 40, width: view.frame.width, height: 60))
         tabBar.backgroundColor = .red
         view.addSubview(tabBar)
@@ -80,7 +124,7 @@ class ProfileViewController: UIViewController {
         addFavButton = UIButton(frame: CGRect(x: 10, y: 265, width: 170, height: 40))
         addFavButton.setTitle("Add to Favorites", for: .normal)
         addFavButton.layer.cornerRadius = 10
-        
+        //append pokemon to favorites array if pressed.
         addFavButton.backgroundColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
         view.addSubview(addFavButton)
     }
@@ -90,6 +134,7 @@ class ProfileViewController: UIViewController {
         toWebButton.setTitle("Search on Web", for: .normal)
         toWebButton.layer.cornerRadius = 10
         toWebButton.backgroundColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
+        toWebButton.addTarget(self, action: #selector(setUpWebView), for: .touchUpInside)
         view.addSubview(toWebButton)
     }
     
@@ -103,9 +148,10 @@ class ProfileViewController: UIViewController {
         view.addSubview(pokeImage)
     }
     
+    /*
     func createPokeBioView() {
         //Number
-        let pokeText : NSString = "No. 6" as NSString
+        let pokeText : NSString = "No. \(pokemon.number)" as NSString
         let range = (pokeText).range(of: "No.")
         let attribute = NSMutableAttributedString.init(string: pokeText as String)
         attribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.red , range: range)
@@ -114,7 +160,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(pokeNum)
         
         //Species
-        let pokeSpeciesText : NSString = "Species: Flame Pokemon" as NSString
+        let pokeSpeciesText : NSString = "Species: \(pokemon.species)" as NSString
         let range1 = (pokeSpeciesText).range(of: "Species:")
         let attribute1 = NSMutableAttributedString.init(string: pokeSpeciesText as String)
         attribute1.addAttribute(NSForegroundColorAttributeName, value: UIColor.red , range: range1)
@@ -127,25 +173,26 @@ class ProfileViewController: UIViewController {
         type.text = "Type:"
         type.textColor = .red
         pokeType1 = UILabel(frame: CGRect(x: 170, y: 205, width: 95, height: 30))
-        pokeType1.text = "Fire"
+        pokeType1.text = String(pokemon.types[0])
         pokeType1.textColor = .white
         pokeType1.textAlignment = .center
         pokeType1.layer.cornerRadius = 10
         pokeType1.layer.borderColor = UIColor.red.cgColor
         pokeType1.layer.backgroundColor = UIColor.red.cgColor
         
-        let flyingTypeColor = UIColor(red:0.26, green:0.83, blue:0.96, alpha:1.0)
-        pokeType2 = UILabel(frame: CGRect(x: 270, y: 205, width: 95, height: 30))
-        pokeType2.text = "Flying"
-        pokeType2.textColor = .white
-        pokeType2.textAlignment = .center
-        pokeType2.layer.cornerRadius = 10
-        pokeType2.layer.borderColor = flyingTypeColor.cgColor
-        pokeType2.layer.backgroundColor = flyingTypeColor.cgColor
-        
+        if (pokemon.types.count > 0){
+            let flyingTypeColor = UIColor(red:0.26, green:0.83, blue:0.96, alpha:1.0)
+            pokeType2 = UILabel(frame: CGRect(x: 270, y: 205, width: 95, height: 30))
+            pokeType2.text = String(pokemon.types[1])
+            pokeType2.textColor = .white
+            pokeType2.textAlignment = .center
+            pokeType2.layer.cornerRadius = 10
+            pokeType2.layer.borderColor = flyingTypeColor.cgColor
+            pokeType2.layer.backgroundColor = flyingTypeColor.cgColor
+            view.addSubview(pokeType2)
+        }
         view.addSubview(type)
         view.addSubview(pokeType1)
-        view.addSubview(pokeType2)
     }
     
     func labelDefaults(_ label : UILabel){
@@ -158,50 +205,41 @@ class ProfileViewController: UIViewController {
         //HP
         pokeHP = UILabel(frame: CGRect(x: 50, y: 390, width: 90, height: 30))
         pokeHP.layer.cornerRadius = 10
-        pokeHP.text = "HP: 78"
+        pokeHP.text = "HP: \(pokemon.health)"
         labelDefaults(pokeHP)
         
         //Att
         pokeAtt = UILabel(frame: CGRect(x: 50, y: 440, width: 90, height: 30))
-        pokeAtt.text = "Atk: 84"
+        pokeAtt.text = "Atk: \(pokemon.attack)"
         labelDefaults(pokeAtt)
         
         //Def
         pokeDef = UILabel(frame: CGRect(x: 50, y: 490, width: 100, height: 30))
-        pokeDef.text = "Def: 78"
+        pokeDef.text = "Def: \(pokemon.defense)"
         labelDefaults(pokeDef)
         
         //Sp.Att
         pokeSpAtt = UILabel(frame: CGRect(x: 200, y: 390, width: 150, height: 30))
-        pokeSpAtt.text = "Sp.Atk: 109"
+        pokeSpAtt.text = "Sp.Atk: \(pokemon.specialAttack)"
         labelDefaults(pokeSpAtt)
         
         //Sp.Def
         pokeSpDef = UILabel(frame: CGRect(x: 200, y: 440, width: 140, height: 30))
-        pokeSpDef.text = "Sp.Def: 85"
+        pokeSpDef.text = "Sp.Def: \(pokemon.specialDefense)"
         labelDefaults(pokeSpDef)
         
         //Speed
         pokeSpeed = UILabel(frame: CGRect(x: 200, y: 490, width: 140, height: 30))
-        pokeSpeed.text = "Speed: 100"
+        pokeSpeed.text = "Speed: \(pokemon.speed)"
         labelDefaults(pokeSpeed)
         
         //Total
         pokeTotal = UILabel(frame: CGRect(x: view.frame.width/2 - 60, y: 550, width: 150, height: 30))
-        pokeTotal.text = "Total: 534"
+        pokeTotal.text = "Total: \(pokemon.total)"
         labelDefaults(pokeTotal)
     }
-    
+    */
 }
-/*
- func createPokeTypeImage(){
- typeImage = UIImageView(frame: CGRect(x: 230, y: 120, width: 120, height: 120))
- typeImage.image = UIImage(named: "7")
- typeImage.contentMode = .scaleAspectFit
- typeImage.clipsToBounds = true
- view.addSubview(typeImage)
- }
- /**
  
 
  //
@@ -211,7 +249,6 @@ class ProfileViewController: UIViewController {
  //  Created by Ethan Wong on 2/13/18.
  //  Copyright © 2018 trainingprogram. All rights reserved.
  //
- 
- */*/
+
 
 

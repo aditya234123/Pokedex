@@ -109,6 +109,7 @@
 				3CFC6F101D98716000B4EBB5 /* ViewController.swift */,
 				191509BB20338D24008A79E5 /* SearchViewController.swift */,
 				191509B920338A3E008A79E5 /* FavoritesViewController.swift */,
+				6B60D14A203519C100BCB24D /* ProfileViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -148,7 +149,6 @@
 				3CFC6F1A1D98716000B4EBB5 /* Info.plist */,
 				3CFC6F3E1D9871F100B4EBB5 /* Pokemon.swift */,
 				3CFC6F401D9871FC00B4EBB5 /* PokemonGenerator.swift */,
-				6B60D14A203519C100BCB24D /* ProfileViewController.swift */,
 			);
 			path = Pokedex;
 			sourceTree = "<group>";
@@ -271,6 +271,7 @@
 				TargetAttributes = {
 					3CFC6F0A1D98716000B4EBB5 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 57X26AKKKU;
 						ProvisioningStyle = Automatic;
 					};
 					3CFC6F1E1D98716000B4EBB5 = {
@@ -649,6 +650,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 57X26AKKKU;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.mdb.Pokedex;
@@ -663,6 +665,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 57X26AKKKU;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.mdb.Pokedex;
