@@ -18,7 +18,7 @@ class SearchButtonsCell: UICollectionViewCell {
         super.awakeFromNib()
         
         button = UIButton(frame: contentView.frame)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 20
         
         contentView.addSubview(button)
         
@@ -28,13 +28,17 @@ class SearchButtonsCell: UICollectionViewCell {
         let strName = "\(num)"
         let image = UIImage(named: strName)
         self.button.setImage(image, for: .normal)
-        button.imageEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 30, right: 20)
+        button.imageEdgeInsets = UIEdgeInsets(top: 14, left: 24, bottom: 34, right: 24)
         button.setTitle(numToType[num], for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Georgia", size: 13)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.font = UIFont(name: "Copperplate-Light ", size: 13)
         button.titleEdgeInsets = UIEdgeInsets(top: contentView.frame.height - 27, left: -(button.imageView?.image?.size.width)!, bottom: 10, right: 0)
-        let bgColor = UIColor(red: 24/255, green: 45/255, blue: 64/255, alpha: 1.0)
-        button.backgroundColor = bgColor
+        //let bgColor = UIColor(red: 24/255, green: 45/255, blue: 64/255, alpha: 1.0)
+        //button.backgroundColor = bgColor
+        button.backgroundColor = .white
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
     }
     
     
