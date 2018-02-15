@@ -8,42 +8,87 @@
 
 import UIKit
 
+protocol SearchControllerDelegate {
+    func changeNavBarColor(color: UIColor)
+}
+
+
 class SearchViewController: UIViewController {
 
+    var delegate: SearchControllerDelegate?
     var collectionView: UICollectionView!
+    
+    var minAttack: UITextField!
+    var minDefense: UITextField!
+    var minHealth: UITextField!
+    
+    var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        delegate?.changeNavBarColor(color: UIColor.red)
         setUpCollectionView()
         setUpNavBar()
+        setUpTextInput()
+    }
+
+    
+    func setUpTextInput() {
+        minAttack = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20, width: view.frame.width - 40, height: 30))
+        
+        minDefense = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 35, width: view.frame.width - 40, height: 30))
+        minHealth = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 70, width: view.frame.width - 40, height: 30))
+        
+        minAttack.layer.borderColor = UIColor.black.cgColor
+        minAttack.layer.borderWidth = 1
+        minAttack.placeholder = "Minimum Attack Points"
+        minDefense.layer.borderColor = UIColor.black.cgColor
+        minDefense.layer.borderWidth = 1
+        minDefense.placeholder = "Minimum Defense Points"
+        minHealth.layer.borderColor = UIColor.black.cgColor
+        minHealth.layer.borderWidth = 1
+        minHealth.placeholder = "Minimum Health Points"
+        
+        view.addSubview(minAttack)
+        view.addSubview(minDefense)
+        view.addSubview(minHealth)
     }
     
     func setUpNavBar() {
-        let bgColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
-        navigationController?.navigationBar.barTintColor = bgColor
         
+        self.navigationController?.navigationBar.isHidden = true
         let image = UIImage(named: "search")
-        let leftBarButtonIcon = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(searchIconPressed))
+        let tintedImage = image?.withRenderingMode(.alwaysTemplate)
+        let leftBarButtonIcon = UIBarButtonItem(image: tintedImage, style: .plain, target: self, action: #selector(searchIconPressed))
         self.tabBarController?.navigationItem.leftBarButtonItem = leftBarButtonIcon
+        self.tabBarController?.navigationItem.leftBarButtonItem?.tintColor = .white
         
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 70, height: 20))
+        var temp = UIBarButtonItem(customView: searchBar)
+        self.tabBarController?.navigationItem.rightBarButtonItem = temp
         
     }
     
     func searchIconPressed() {
      print("pressed")
+        
+        
+        
     }
     
     func setUpCollectionView() {
+        view.backgroundColor = .white
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: -30, left: 5, bottom: 5, right: 5)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5
-        collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 120, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        let bgColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
-        collectionView.backgroundColor = bgColor
+        //let bgColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
+        //collectionView.backgroundColor = bgColor
+        collectionView.backgroundColor = .white
         collectionView.register(SearchButtonsCell.self, forCellWithReuseIdentifier: "button")
         view.addSubview(collectionView)
     }
@@ -74,7 +119,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width / 3.0) - (20 / 3)
+        let width = (view.frame.width / 4.0) - (25 / 4)
         let height = width
         return CGSize(width: width, height: height)
     }
