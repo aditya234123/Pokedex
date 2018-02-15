@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ViewAnimator
 
 protocol SearchControllerDelegate {
     func changeNavBarColor(color: UIColor)
@@ -14,7 +15,7 @@ protocol SearchControllerDelegate {
 
 
 class SearchViewController: UIViewController {
-
+    
     var delegate: SearchControllerDelegate?
     var collectionView: UICollectionView!
     
@@ -32,13 +33,20 @@ class SearchViewController: UIViewController {
         setUpNavBar()
         setUpTextInput()
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        view.animateRandom()
+    }
+    
     
     func setUpTextInput() {
         minAttack = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20, width: view.frame.width - 40, height: 30))
-        
+        minAttack.layer.cornerRadius = 5
         minDefense = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 35, width: view.frame.width - 40, height: 30))
+        minDefense.layer.cornerRadius = 5
         minHealth = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 70, width: view.frame.width - 40, height: 30))
+        minHealth.layer.cornerRadius = 5
+        
         
         minAttack.layer.borderColor = UIColor.black.cgColor
         minAttack.layer.borderWidth = 1
@@ -64,14 +72,16 @@ class SearchViewController: UIViewController {
         self.tabBarController?.navigationItem.leftBarButtonItem = leftBarButtonIcon
         self.tabBarController?.navigationItem.leftBarButtonItem?.tintColor = .white
         
-        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 70, height: 20))
-        var temp = UIBarButtonItem(customView: searchBar)
-        self.tabBarController?.navigationItem.rightBarButtonItem = temp
-        
     }
     
     func searchIconPressed() {
-     print("pressed")
+        print("pressed")
+        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 50, height: 20))
+        UIView.animate(withDuration: 2) {
+            var temp = UIBarButtonItem(customView: self.searchBar)
+            self.tabBarController?.navigationItem.leftBarButtonItem = temp
+        }
+        
         
         
         
@@ -93,7 +103,7 @@ class SearchViewController: UIViewController {
         view.addSubview(collectionView)
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

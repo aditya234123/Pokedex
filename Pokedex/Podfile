@@ -7,6 +7,8 @@ target 'Pokedex' do
 
   # Pods for Pokedex
     pod 'SnapKit', '~> 3.2.0’
+    pod "ViewAnimator"
+
 
   target 'PokedexTests' do
     inherit! :search_paths

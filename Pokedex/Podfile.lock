@@ -1,12 +1,15 @@
 PODS:
   - SnapKit (3.2.0)
+  - ViewAnimator (1.0.4)
 
 DEPENDENCIES:
   - SnapKit (~> 3.2.0)
+  - ViewAnimator
 
 SPEC CHECKSUMS:
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  ViewAnimator: 1f3fa25f3c9010ab0dda06cf9e3e49a4b55834ff
 
-PODFILE CHECKSUM: 3ffc5b4706f008ecece67c8dfa9e0ae02b38d42f
+PODFILE CHECKSUM: ea7143fc49523af9db08549d30f521f6087c874d
 
 COCOAPODS: 1.1.1
