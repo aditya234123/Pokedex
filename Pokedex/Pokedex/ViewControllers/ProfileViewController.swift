@@ -17,7 +17,7 @@
 import UIKit
 import SafariServices
 
-var favoritePokemon = [Pokemon]()
+var favoritePokemon = [String]()
 
 class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewControllerDelegate{
     //Pokemon Display Information
@@ -137,10 +137,9 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
     }
     
     func addToFavorites() {
-        favoritePokemon.append(self.pokemon)
+        favoritePokemon.append(self.pokemon.name)
         let defaults = UserDefaults.standard
-        let data = NSKeyedArchiver.archivedData(withRootObject: favoritePokemon)
-        defaults.set(data, forKey: "savedPokemon")
+        defaults.set(favoritePokemon, forKey: "savedPokemon")
     }
     
     func createWebButton(){
@@ -157,7 +156,15 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         let VHGT = view.frame.height
         
         pokeImage = UIImageView(frame: CGRect(x: 0, y: 80, width: 180, height: 180))
-        pokeImage.image = UIImage(named: "charizard")
+        
+        //add image url
+        let url = URL(string:pokemon.imageUrl)
+        if let data = try? Data(contentsOf: url!)
+        {
+            let image: UIImage = UIImage(data: data)!
+            self.pokeImage.image = image
+        }
+        
         pokeImage.contentMode = .scaleAspectFit
         view.addSubview(pokeImage)
     }
