@@ -140,6 +140,10 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let url = URL(string:filteredArray[indexPath.item].imageUrl)
         if url != nil {
             if let data = try? Data(contentsOf: url!)
@@ -154,7 +158,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         cell.textLabel?.textAlignment = .center
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor.black.cgColor
-        return cell
     }
     
     func goBack() {
@@ -210,9 +213,21 @@ extension ResultsViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         let cell = cell as! PokeButtonCell
         
-        cell.setButton(num: indexPath.item + 1)
+        cell.pokeDelegate = self
         
+        cell.setButton(num: indexPath.item + 1)
+        let url = URL(string: filteredArray[indexPath.row].imageUrl)
+        if let data = try? Data(contentsOf: url!)
+        {
+            let image: UIImage = UIImage(data: data)!
+            cell.pokeButton.setImage(image, for: .normal)
+        }
+        cell.pokeButton.setTitle(filteredArray[indexPath.row].name, for: .normal)
+        if let temp = cell.pokeButton.imageView?.image?.size.width {
+            cell.pokeButton.titleEdgeInsets = UIEdgeInsets(top: cell.contentView.frame.height - 27, left: -temp, bottom: 10, right: 0)
+        }    
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (view.frame.width / 3) - 8
@@ -222,9 +237,19 @@ extension ResultsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("worked!!")
         pokeIndex = indexPath.row
         performSegue(withIdentifier: "toProfile", sender: self)
     }
 
 }
 
+
+extension ResultsViewController: pokeButtonCellDelegate {
+    func segue(num: Int) {
+        print("segueing")
+        pokeIndex = num - 1
+        performSegue(withIdentifier: "toProfile", sender: self)
+    }
+    
+}
