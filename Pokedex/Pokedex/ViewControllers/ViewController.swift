@@ -14,7 +14,7 @@ class ViewController: UITabBarController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let searchViewController = SearchViewController()
+        let searchViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "search") as! SearchViewController
         let searchNavController = UINavigationController(rootViewController: searchViewController)
         searchNavController.tabBarItem.title = "Filter"
         searchNavController.tabBarItem.image = UIImage(named: "filter")
@@ -43,9 +43,8 @@ class ViewController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
+
 
 extension ViewController: SearchControllerDelegate {
     func changeNavBarColor(color: UIColor) {
@@ -54,7 +53,12 @@ extension ViewController: SearchControllerDelegate {
         parent.navigationBar.isTranslucent = false
     }
     
-    
+    func hideNavBar() {
+        let parent = self.parent as! UINavigationController
+        parent.navigationController?.isNavigationBarHidden = true
+    }
+
 }
+    
 
 

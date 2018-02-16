@@ -10,6 +10,7 @@ import UIKit
 
 protocol SearchControllerDelegate {
     func changeNavBarColor(color: UIColor)
+    func hideNavBar()
 }
 
 
@@ -71,10 +72,13 @@ class SearchViewController: UIViewController {
     }
     
     func searchIconPressed() {
-     print("pressed")
+    
+        self.performSegue(withIdentifier: "toSearch", sender: self)
         
-        
-        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
     }
     
     func setUpCollectionView() {
