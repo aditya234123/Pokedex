@@ -16,8 +16,8 @@ protocol SearchControllerDelegate {
     func setNavBarTitle(name: String)
     func setUpResultBack()
     func setUpProfileBack()
+    func removeNavBarTitle()
 }
-
 
 class SearchViewController: UIViewController {
     
@@ -62,13 +62,13 @@ class SearchViewController: UIViewController {
         
         minAttack.layer.borderColor = UIColor.black.cgColor
         minAttack.layer.borderWidth = 1
-        minAttack.placeholder = "Minimum Attack Points"
+        minAttack.placeholder = " Minimum Attack Points"
         minDefense.layer.borderColor = UIColor.black.cgColor
         minDefense.layer.borderWidth = 1
-        minDefense.placeholder = "Minimum Defense Points"
+        minDefense.placeholder = " Minimum Defense Points"
         minHealth.layer.borderColor = UIColor.black.cgColor
         minHealth.layer.borderWidth = 1
-        minHealth.placeholder = "Minimum Health Points"
+        minHealth.placeholder = " Minimum Health Points"
         
         scrollView.addSubview(minAttack)
         scrollView.addSubview(minDefense)

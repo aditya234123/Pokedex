@@ -19,13 +19,12 @@ class SearchButtonsCell: UICollectionViewCell {
         super.awakeFromNib()
         button = UIButton(frame: contentView.frame)
         button.layer.cornerRadius = 20
-        
         contentView.addSubview(button)
         
     }
     
     func setButton(num: Int) {
-        let strName = "\(num)"
+        let strName = "\(num)" 
         let image = UIImage(named: strName)
         self.button.setImage(image, for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 14, left: 24, bottom: 34, right: 24)

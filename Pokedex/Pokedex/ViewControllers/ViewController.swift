@@ -68,10 +68,12 @@ extension ViewController: SearchControllerDelegate {
     
     func setUpResultBack() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(segueBackResult))
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
     }
     
     func setUpProfileBack() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(segueBackProfile))
+        self.navigationItem.leftBarButtonItem?.tintColor = .white
     }
     
     func segueBackResult() {
@@ -85,6 +87,10 @@ extension ViewController: SearchControllerDelegate {
     func setNavBarTitle(name: String) {
         self.title = name
         self.navigationController?.navigationBar.tintColor = .white
+    }
+    
+    func removeNavBarTitle() {
+        self.title = nil
     }
 
 }
