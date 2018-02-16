@@ -15,21 +15,24 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     let myArray: NSArray = ["First","Second","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third"]
 
+    var label: UILabel!
+    var searchDelegate: SearchControllerDelegate?
+
     override func viewDidLoad() {
-        
-        var delegate: SearchControllerDelegate?
+        resultVC = self
+        searchDelegate?.hideNavBar()
         self.tabBarController?.tabBar.isHidden = true
         self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = reddishColor
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
         //self.extendedLayoutIncludesOpaqueBars = true
         view.backgroundColor = .white
         setUpSegmentControl()
         setUpTableView()
         
 }
+    
     func setUpTableView(){
-
         
         myTableView = UITableView(frame: CGRect(x: 0, y: 60, width: view.frame.width, height: view.frame.height - 166))
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
@@ -54,6 +57,14 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         cell.layer.borderColor = UIColor.black.cgColor
         return cell
     }
+    
+    
+    func goBack() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+        
+
     
     func setUpSegmentControl() {
         let items = ["Table", "Grid"]

@@ -30,8 +30,12 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view.
         delegate?.changeNavBarColor(color: UIColor.red)
         setUpCollectionView()
-        setUpNavBar()
+        //setUpNavBar()
         setUpTextInput()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setUpNavBar()
     }
 
     
@@ -78,7 +82,8 @@ class SearchViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        let destVC  = segue.destination as? ResultsViewController
+        destVC?.searchDelegate = self.delegate
     }
     
     func setUpCollectionView() {
