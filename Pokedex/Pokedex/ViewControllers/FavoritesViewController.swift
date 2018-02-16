@@ -17,6 +17,7 @@ class FavoritesViewController: UIViewController {
         
         let defaults = UserDefaults.standard
         let temp = defaults.object(forKey: "savedPokemon")
+        print(temp)
         
     }
 

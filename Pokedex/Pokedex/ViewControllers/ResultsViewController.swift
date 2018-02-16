@@ -23,8 +23,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     var myTableView : UITableView!
     var reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
     
-    let myArray: NSArray = ["First","Second","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third"]
-    
     var label: UILabel!
     var searchDelegate: SearchControllerDelegate?
     
@@ -96,8 +94,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Num: \(indexPath.row)")
-        print("Value: \(myArray[indexPath.row])")
         pokeIndex = indexPath.row
         performSegue(withIdentifier: "toProfile", sender: self)
     }
@@ -109,12 +105,11 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myArray.count
+        return filteredArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
-        cell.textLabel!.text = "\(myArray[indexPath.row])"
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor.black.cgColor
         return cell
@@ -124,8 +119,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     func goBack() {
         self.navigationController?.popToRootViewController(animated: true)
     }
-    
-    
     
     
     func setUpSegmentControl() {
