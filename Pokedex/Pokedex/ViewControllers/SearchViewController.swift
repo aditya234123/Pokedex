@@ -13,6 +13,7 @@ var typeFilters = [String]()
 protocol SearchControllerDelegate {
     func changeNavBarColor(color: UIColor)
     func hideNavBar()
+    func setNavBarTitle(name: String)
 }
 
 

@@ -67,6 +67,12 @@ extension ViewController: SearchControllerDelegate {
     func segueBack() {
         resultVC!.goBack()
     }
+    
+    func setNavBarTitle(name: String) {
+        self.title = name
+        self.navigationController?.navigationBar.tintColor = .white
+       
+    }
 
 }
     

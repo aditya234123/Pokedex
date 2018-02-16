@@ -15,6 +15,8 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     var minHealth: Int?
     var searchBar: String?
     
+    var pokeIndex: Int?
+    
     var pokemonArray = [Pokemon]()
     var filteredArray = [Pokemon]()
     
@@ -52,7 +54,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
                 let name = temp.name
                 if name?.range(of: searchBar!) != nil {
                     filteredArray.append(temp)
-                    print(name)
                 }
             }
             
@@ -71,7 +72,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
                             
                             filteredArray.append(temp)
                             single = false
-                            print(temp.name)
                         }
                     }
                 }
@@ -98,6 +98,14 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Num: \(indexPath.row)")
         print("Value: \(myArray[indexPath.row])")
+        pokeIndex = indexPath.row
+        performSegue(withIdentifier: "toProfile", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let DestVC = segue.destination as! ProfileViewController
+        DestVC.pokemon = filteredArray[pokeIndex!]
+        DestVC.searchDelegate = self.searchDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

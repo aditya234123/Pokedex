@@ -35,6 +35,8 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
     var pokeType2 : UILabel!
     var pokeSpecies : UILabel!
     
+    var searchDelegate: SearchControllerDelegate?
+    
     //UI Set Up
     var divider : UILabel!
     var botHalf : UILabel!
@@ -73,15 +75,17 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         super.viewDidLoad()
         setUpUI()
         createPokeImage()
-        //createPokeBioView()
+        createPokeBioView()
         createFavButton()
         createWebButton()
-        //createPokeStatsView()
-        self.title = "pokemon.name"
+        createPokeStatsView()
+        searchDelegate?.setNavBarTitle(name: pokemon.name!)
     }
     
     @objc func setUpWebView(){
-        let urlString = "https://www.google.com"
+        
+        let replacedPokeName = pokemon.name.replacingOccurrences(of: " ", with: "+")
+        let urlString = "https://www.google.com/search?q=" + replacedPokeName
         
         if let url = URL(string: urlString) {
             let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
@@ -148,10 +152,10 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         view.addSubview(pokeImage)
     }
     
-    /*
+    
      func createPokeBioView() {
      //Number
-     let pokeText : NSString = "No. \(pokemon.number)" as NSString
+     let pokeText : NSString = "No. \(pokemon.number!)" as NSString
      let range = (pokeText).range(of: "No.")
      let attribute = NSMutableAttributedString.init(string: pokeText as String)
      attribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.red , range: range)
@@ -160,7 +164,7 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
      view.addSubview(pokeNum)
      
      //Species
-     let pokeSpeciesText : NSString = "Species: \(pokemon.species)" as NSString
+     let pokeSpeciesText : NSString = "Species: \(pokemon.species!)" as NSString
      let range1 = (pokeSpeciesText).range(of: "Species:")
      let attribute1 = NSMutableAttributedString.init(string: pokeSpeciesText as String)
      attribute1.addAttribute(NSForegroundColorAttributeName, value: UIColor.red , range: range1)
@@ -180,16 +184,16 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
      pokeType1.layer.borderColor = UIColor.red.cgColor
      pokeType1.layer.backgroundColor = UIColor.red.cgColor
      
-     if (pokemon.types.count > 0){
-     let flyingTypeColor = UIColor(red:0.26, green:0.83, blue:0.96, alpha:1.0)
-     pokeType2 = UILabel(frame: CGRect(x: 270, y: 205, width: 95, height: 30))
-     pokeType2.text = String(pokemon.types[1])
-     pokeType2.textColor = .white
-     pokeType2.textAlignment = .center
-     pokeType2.layer.cornerRadius = 10
-     pokeType2.layer.borderColor = flyingTypeColor.cgColor
-     pokeType2.layer.backgroundColor = flyingTypeColor.cgColor
-     view.addSubview(pokeType2)
+     if (pokemon.types.count > 1){
+         let flyingTypeColor = UIColor(red:0.26, green:0.83, blue:0.96, alpha:1.0)
+         pokeType2 = UILabel(frame: CGRect(x: 270, y: 205, width: 95, height: 30))
+         pokeType2.text = String(pokemon.types[1])
+         pokeType2.textColor = .white
+         pokeType2.textAlignment = .center
+         pokeType2.layer.cornerRadius = 10
+         pokeType2.layer.borderColor = flyingTypeColor.cgColor
+         pokeType2.layer.backgroundColor = flyingTypeColor.cgColor
+         view.addSubview(pokeType2)
      }
      view.addSubview(type)
      view.addSubview(pokeType1)
@@ -205,40 +209,40 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
      //HP
      pokeHP = UILabel(frame: CGRect(x: 50, y: 390, width: 90, height: 30))
      pokeHP.layer.cornerRadius = 10
-     pokeHP.text = "HP: \(pokemon.health)"
+     pokeHP.text = "HP: \(pokemon.health!)"
      labelDefaults(pokeHP)
      
      //Att
      pokeAtt = UILabel(frame: CGRect(x: 50, y: 440, width: 90, height: 30))
-     pokeAtt.text = "Atk: \(pokemon.attack)"
+     pokeAtt.text = "Atk: \(pokemon.attack!)"
      labelDefaults(pokeAtt)
      
      //Def
      pokeDef = UILabel(frame: CGRect(x: 50, y: 490, width: 100, height: 30))
-     pokeDef.text = "Def: \(pokemon.defense)"
+     pokeDef.text = "Def: \(pokemon.defense!)"
      labelDefaults(pokeDef)
      
      //Sp.Att
      pokeSpAtt = UILabel(frame: CGRect(x: 200, y: 390, width: 150, height: 30))
-     pokeSpAtt.text = "Sp.Atk: \(pokemon.specialAttack)"
+     pokeSpAtt.text = "Sp.Atk: \(pokemon.specialAttack!)"
      labelDefaults(pokeSpAtt)
      
      //Sp.Def
      pokeSpDef = UILabel(frame: CGRect(x: 200, y: 440, width: 140, height: 30))
-     pokeSpDef.text = "Sp.Def: \(pokemon.specialDefense)"
+     pokeSpDef.text = "Sp.Def: \(pokemon.specialDefense!)"
      labelDefaults(pokeSpDef)
      
      //Speed
      pokeSpeed = UILabel(frame: CGRect(x: 200, y: 490, width: 140, height: 30))
-     pokeSpeed.text = "Speed: \(pokemon.speed)"
+     pokeSpeed.text = "Speed: \(pokemon.speed!)"
      labelDefaults(pokeSpeed)
      
      //Total
      pokeTotal = UILabel(frame: CGRect(x: view.frame.width/2 - 60, y: 550, width: 150, height: 30))
-     pokeTotal.text = "Total: \(pokemon.total)"
+     pokeTotal.text = "Total: \(pokemon.total!)"
      labelDefaults(pokeTotal)
      }
-     */
+     
 }
 
 
