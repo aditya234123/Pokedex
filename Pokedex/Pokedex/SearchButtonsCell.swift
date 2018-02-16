@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol searchButtonCellDelegate {
+    func randomSegue()
+}
+
 class SearchButtonsCell: UICollectionViewCell {
- 
+    
     var button: UIButton!
     var IndexPathNum: Int?
     
-    let numToType = [1 : "Bug", 2 : "Dark", 3 : "Dragon", 4 : "Electric", 5 : "Fairy", 6 : "Fighting", 7 : "Fire", 8 : "Flying", 9 : "Ghost", 10 : "Grass", 11 : "Ground", 12 : "Ice", 13 : "Normal", 14 : "Poison", 15 : "Pyschic", 16 : "Rock", 17 : "Steel", 18 : "Water"]
+    var searchCellDelegate: searchButtonCellDelegate?
+    
+    let numToType = [1 : "Bug", 2 : "Dark", 3 : "Dragon", 4 : "Electric", 5 : "Fairy", 6 : "Fighting", 7 : "Fire", 8 : "Flying", 9 : "Ghost", 10 : "Grass", 11 : "Ground", 12 : "Ice", 13 : "Normal", 14 : "Poison", 15 : "Pyschic", 16 : "Rock", 17 : "Steel", 18 : "Water", 19 : "RANDOM"]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,15 +49,18 @@ class SearchButtonsCell: UICollectionViewCell {
     }
     
     @objc func buttonPressed() {
-        isSelected = true
-        if typeFilters.contains(numToType[IndexPathNum!]!) {
-            typeFilters.remove(at: typeFilters.index(of: numToType[IndexPathNum!]!)!)
-            button.backgroundColor = .white
-            button.setTitleColor(.black, for: .normal)
+        if IndexPathNum == 19 {
+            searchCellDelegate?.randomSegue()
         } else {
-            typeFilters.append(numToType[IndexPathNum!]!)
-            button.backgroundColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
-            button.setTitleColor(.white, for: .normal)
+            if typeFilters.contains(numToType[IndexPathNum!]!) {
+                typeFilters.remove(at: typeFilters.index(of: numToType[IndexPathNum!]!)!)
+                button.backgroundColor = .white
+                button.setTitleColor(.black, for: .normal)
+            } else {
+                typeFilters.append(numToType[IndexPathNum!]!)
+                button.backgroundColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
+                button.setTitleColor(.white, for: .normal)
+            }
         }
         print(typeFilters)
     }

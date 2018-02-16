@@ -33,6 +33,8 @@ class SearchViewController: UIViewController {
     
     var searchBar: UISearchBar!
     
+    var random = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -41,7 +43,7 @@ class SearchViewController: UIViewController {
         setUpCollectionView()
         //setUpNavBar()
         setUpTextInput()
-       
+        
     }
     
     func elseTapped() {
@@ -75,7 +77,7 @@ class SearchViewController: UIViewController {
         minDefense.selectedLineColor = reddishColor
         
         minHealth = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 70, width: view.frame.width - 40, height: 30))
-
+        
         minHealth.selectedTitleColor = reddishColor
         minHealth.selectedLineColor = reddishColor
         
@@ -119,24 +121,31 @@ class SearchViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destVC  = segue.destination as? ResultsViewController
-        destVC?.searchDelegate = self.delegate
-        if let temp = Int(minAttack.text!) {
-            destVC?.minAttack = temp
+        
+        if !random {
+            let destVC  = segue.destination as? ResultsViewController
+            destVC?.searchDelegate = self.delegate
+            if let temp = Int(minAttack.text!) {
+                destVC?.minAttack = temp
+            } else {
+                destVC?.minAttack = 0
+            }
+            if let temp = Int(minDefense.text!) {
+                destVC?.minDefense = temp
+            } else {
+                destVC?.minDefense = 0
+            }
+            if let temp = Int(minHealth.text!) {
+                destVC?.minHealth = temp
+            } else {
+                destVC?.minHealth = 0
+            }
+            destVC?.searchBar = searchBar.text
         } else {
-            destVC?.minAttack = 0
+            let destVC  = segue.destination as? ResultsViewController
+            destVC?.searchDelegate = self.delegate
+            destVC?.random = true
         }
-        if let temp = Int(minDefense.text!) {
-            destVC?.minDefense = temp
-        } else {
-            destVC?.minDefense = 0
-        }
-        if let temp = Int(minHealth.text!) {
-            destVC?.minHealth = temp
-        } else {
-            destVC?.minHealth = 0
-        }
-        destVC?.searchBar = searchBar.text
     }
     
     func setUpCollectionView() {
@@ -155,7 +164,7 @@ class SearchViewController: UIViewController {
         scrollView.addSubview(collectionView)
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -166,12 +175,13 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 18
+        return 19
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "button", for: indexPath) as! SearchButtonsCell
         cell.awakeFromNib()
+        cell.searchCellDelegate = self
         return cell
     }
     
@@ -187,13 +197,22 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return CGSize(width: width, height: height)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        print("yo")
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //        print("yo")
+    //    }
     
     
     
     
+    
+}
+
+extension SearchViewController: searchButtonCellDelegate {
+    
+    func randomSegue() {
+        random = true
+        performSegue(withIdentifier: "toSearch", sender: self)
+    }
     
 }
 

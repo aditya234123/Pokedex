@@ -22,6 +22,8 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     var myTableView : UITableView!
     var myCollectionView : UICollectionView!
     
+    var random = false
+    
     var reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
     
     var label: UILabel!
@@ -53,39 +55,53 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         
         pokemonArray = PokemonGenerator.getPokemonArray()
         
-        if searchBar != "" {
-            for i in 0...(pokemonArray.count - 1) {
-                //search for name
-                let temp = pokemonArray[i]
-                let name = temp.name
-                if name?.range(of: searchBar!) != nil {
-                    filteredArray.append(temp)
+        if !random {
+            
+            if searchBar != "" {
+                for i in 0...(pokemonArray.count - 1) {
+                    //search for name
+                    let temp = pokemonArray[i]
+                    let name = temp.name
+                    if name?.range(of: searchBar!) != nil {
+                        filteredArray.append(temp)
+                    }
                 }
-            }
-            
-        } else {
-            //category filters
-            
-            //types
-            for i in 0...(pokemonArray.count - 1) {
-                let temp = pokemonArray[i]
-                let type = temp.types
-                var single = true
-                for i in 0...(type.count - 1) {
-                    if (typeFilters.contains(type[i]) && single) {
-                        
-                        if (minAttack! < temp.attack && minDefense! < temp.defense && minHealth! < temp.health) {
+                
+            } else {
+                //category filters
+                
+                //types
+                for i in 0...(pokemonArray.count - 1) {
+                    let temp = pokemonArray[i]
+                    let type = temp.types
+                    var single = true
+                    for i in 0...(type.count - 1) {
+                        if (typeFilters.contains(type[i]) && single) {
                             
-                            filteredArray.append(temp)
-                            single = false
+                            if (minAttack! < temp.attack && minDefense! < temp.defense && minHealth! < temp.health) {
+                                
+                                filteredArray.append(temp)
+                                single = false
+                            }
                         }
                     }
                 }
+                
+                
+                
+                
+                
             }
             
+        } else {
             
-            
-            
+            var tracker = [Int]()
+            //random
+            for _ in 1...20 {
+                let temp = Int(arc4random_uniform(800))
+                tracker.append(temp)
+                filteredArray.append(pokemonArray[temp])
+            }
             
         }
         
@@ -203,7 +219,7 @@ extension ResultsViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "button", for: indexPath) as! PokeButtonCell
         cell.awakeFromNib()
-
+        
         return cell
     }
     
@@ -239,7 +255,7 @@ extension ResultsViewController: UICollectionViewDelegate, UICollectionViewDataS
         pokeIndex = indexPath.row
         performSegue(withIdentifier: "toProfile", sender: self)
     }
-
+    
 }
 
 
