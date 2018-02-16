@@ -41,6 +41,11 @@ class SearchViewController: UIViewController {
         setUpCollectionView()
         //setUpNavBar()
         setUpTextInput()
+       
+    }
+    
+    func elseTapped() {
+        print("test")
     }
     
     func setUpScrollView() {
@@ -92,18 +97,25 @@ class SearchViewController: UIViewController {
         self.tabBarController?.navigationItem.leftBarButtonItem = leftBarButtonIcon
         self.tabBarController?.navigationItem.leftBarButtonItem?.tintColor = .white
         
-        searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 70, height: 20))
-        var temp = UIBarButtonItem(customView: searchBar)
-        self.tabBarController?.navigationItem.rightBarButtonItem = temp
-        UIView.animate(withDuration: 2) {
-            self.searchBar.frame.origin.x = 1000
-        }
+        searchBar = UISearchBar(frame: CGRect(x: -1000, y: 0, width: view.frame.width - 70, height: 20))
+        
     }
     
     func searchIconPressed() {
+        var temp = UIBarButtonItem(customView: searchBar)
+        self.tabBarController?.navigationItem.leftBarButtonItem = temp
+        let image = UIImage(named: "play")
+        let tintedImage = image?.withRenderingMode(.alwaysTemplate)
+        let rightBarButtonIcon = UIBarButtonItem(image: tintedImage, style: .plain, target: self, action: #selector(playPressed))
+        UIView.animate(withDuration: 0.5) {
+            self.searchBar.frame.origin.x = 1000
+            self.tabBarController?.navigationItem.rightBarButtonItem = rightBarButtonIcon
+            self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = .white
+        }
+    }
     
-        self.performSegue(withIdentifier: "toSearch", sender: self)
-        
+    func playPressed() {
+        performSegue(withIdentifier: "toSearch", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

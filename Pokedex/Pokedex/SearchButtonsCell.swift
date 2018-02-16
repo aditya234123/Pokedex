@@ -47,6 +47,7 @@ class SearchButtonsCell: UICollectionViewCell {
         if typeFilters.contains(numToType[IndexPathNum!]!) {
             typeFilters.remove(at: typeFilters.index(of: numToType[IndexPathNum!]!)!)
             button.backgroundColor = .white
+            button.setTitleColor(.black, for: .normal)
         } else {
             typeFilters.append(numToType[IndexPathNum!]!)
             button.backgroundColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
