@@ -85,7 +85,9 @@ class SearchViewController: UIViewController {
         searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: view.frame.width - 70, height: 20))
         var temp = UIBarButtonItem(customView: searchBar)
         self.tabBarController?.navigationItem.rightBarButtonItem = temp
-        
+        UIView.animate(withDuration: 2) {
+            self.searchBar.frame.origin.x = 1000
+        }
     }
     
     func searchIconPressed() {

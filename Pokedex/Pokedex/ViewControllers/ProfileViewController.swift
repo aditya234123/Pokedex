@@ -17,6 +17,8 @@
 import UIKit
 import SafariServices
 
+var favoritePokemon = [Pokemon]()
+
 class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewControllerDelegate{
     //Pokemon Display Information
     var pokemon : Pokemon!
@@ -130,7 +132,15 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         addFavButton.layer.cornerRadius = 10
         //append pokemon to favorites array if pressed.
         addFavButton.backgroundColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
+        addFavButton.addTarget(self, action: #selector(addToFavorites), for: .touchUpInside)
         view.addSubview(addFavButton)
+    }
+    
+    func addToFavorites() {
+        favoritePokemon.append(self.pokemon)
+        let defaults = UserDefaults.standard
+        let data = NSKeyedArchiver.archivedData(withRootObject: favoritePokemon)
+        defaults.set(data, forKey: "savedPokemon")
     }
     
     func createWebButton(){

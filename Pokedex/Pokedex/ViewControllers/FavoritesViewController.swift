@@ -14,6 +14,14 @@ class FavoritesViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        let defaults = UserDefaults.standard
+
+        if let data = defaults.object(forKey: "savedPokemon") as? NSData {
+            let item = NSKeyedUnarchiver.unarchiveObject(with: data as Data) as? [Pokemon]
+            print(item![0].name)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
