@@ -6,7 +6,7 @@ target 'Pokedex' do
   use_frameworks!
 
   # Pods for Pokedex
-    pod 'SnapKit', '~> 3.2.0’
+    pod 'SkyFloatingLabelTextField', '~> 3.0'
 
   target 'PokedexTests' do
     inherit! :search_paths

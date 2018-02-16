@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SkyFloatingLabelTextField
 
 var typeFilters = [String]()
 
@@ -24,9 +25,9 @@ class SearchViewController: UIViewController {
     var delegate: SearchControllerDelegate?
     var collectionView: UICollectionView!
     
-    var minAttack: UITextField!
-    var minDefense: UITextField!
-    var minHealth: UITextField!
+    var minAttack: SkyFloatingLabelTextField!
+    var minDefense: SkyFloatingLabelTextField!
+    var minHealth: SkyFloatingLabelTextField!
     
     var scrollView: UIScrollView!
     
@@ -52,22 +53,29 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         setUpNavBar()
     }
-
     
     func setUpTextInput() {
-        minAttack = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20, width: view.frame.width - 40, height: 30))
         
-        minDefense = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 35, width: view.frame.width - 40, height: 30))
-        minHealth = UITextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 70, width: view.frame.width - 40, height: 30))
+        let reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
         
-        minAttack.layer.borderColor = UIColor.black.cgColor
-        minAttack.layer.borderWidth = 1
+        minAttack = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20, width: view.frame.width - 40, height: 30))
+        
+        minAttack.selectedTitleColor = reddishColor
+        minAttack.selectedLineColor = reddishColor
+        
+        minDefense = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 35, width: 
+            view.frame.width - 40, height: 30))
+        
+        minDefense.selectedTitleColor = reddishColor
+        minDefense.selectedLineColor = reddishColor
+        
+        minHealth = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 70, width: view.frame.width - 40, height: 30))
+
+        minHealth.selectedTitleColor = reddishColor
+        minHealth.selectedLineColor = reddishColor
+        
         minAttack.placeholder = " Minimum Attack Points"
-        minDefense.layer.borderColor = UIColor.black.cgColor
-        minDefense.layer.borderWidth = 1
         minDefense.placeholder = " Minimum Defense Points"
-        minHealth.layer.borderColor = UIColor.black.cgColor
-        minHealth.layer.borderWidth = 1
         minHealth.placeholder = " Minimum Health Points"
         
         scrollView.addSubview(minAttack)
@@ -176,8 +184,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     
 }
-
-
 
 
 

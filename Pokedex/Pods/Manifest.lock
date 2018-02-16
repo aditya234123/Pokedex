@@ -1,12 +1,12 @@
 PODS:
-  - SnapKit (3.2.0)
+  - SkyFloatingLabelTextField (3.4.0)
 
 DEPENDENCIES:
-  - SnapKit (~> 3.2.0)
+  - SkyFloatingLabelTextField (~> 3.0)
 
 SPEC CHECKSUMS:
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SkyFloatingLabelTextField: 703aa1420b697392b1e7dba25571180dde018477
 
-PODFILE CHECKSUM: 3ffc5b4706f008ecece67c8dfa9e0ae02b38d42f
+PODFILE CHECKSUM: 3fbb580c9b25fb1e47bde1de7f7d8c4ce6a319ce
 
 COCOAPODS: 1.1.1

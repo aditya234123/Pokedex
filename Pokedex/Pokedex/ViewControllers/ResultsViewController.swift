@@ -156,8 +156,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         }
         cell.textLabel?.text = "No. \(filteredArray[indexPath.item].number!) " + filteredArray[indexPath.item].name
         cell.textLabel?.textAlignment = .center
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.black.cgColor
     }
     
     func goBack() {
