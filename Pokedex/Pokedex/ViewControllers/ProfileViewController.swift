@@ -82,6 +82,7 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         createWebButton()
         createPokeStatsView()
         searchDelegate?.setNavBarTitle(name: pokemon.name!)
+        searchDelegate?.setUpProfileBack()
     }
     
     @objc func setUpWebView(){
@@ -98,6 +99,10 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         dismiss(animated: true)
+    }
+    
+    func goBack() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setUpUI(){

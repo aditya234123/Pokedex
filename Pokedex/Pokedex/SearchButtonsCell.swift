@@ -17,14 +17,12 @@ class SearchButtonsCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         button = UIButton(frame: contentView.frame)
         button.layer.cornerRadius = 20
         
         contentView.addSubview(button)
         
     }
-    
     
     func setButton(num: Int) {
         let strName = "\(num)"
@@ -46,6 +44,7 @@ class SearchButtonsCell: UICollectionViewCell {
     }
     
     @objc func buttonPressed() {
+        isSelected = true
         if typeFilters.contains(numToType[IndexPathNum!]!) {
             typeFilters.remove(at: typeFilters.index(of: numToType[IndexPathNum!]!)!)
             button.backgroundColor = .white

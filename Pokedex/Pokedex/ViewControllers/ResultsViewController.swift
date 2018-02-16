@@ -29,6 +29,7 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         resultVC = self
         searchDelegate?.hideNavBar()
+        searchDelegate?.setUpResultBack()
         self.tabBarController?.tabBar.isHidden = true
         self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = reddishColor
@@ -100,6 +101,7 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let DestVC = segue.destination as! ProfileViewController
+        profileVC = DestVC
         DestVC.pokemon = filteredArray[pokeIndex!]
         DestVC.searchDelegate = self.searchDelegate
     }
@@ -117,7 +119,7 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     
     func goBack() {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     

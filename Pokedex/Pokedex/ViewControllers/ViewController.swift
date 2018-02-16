@@ -9,8 +9,11 @@
 import UIKit
 
 var resultVC: ResultsViewController?
+var profileVC: ProfileViewController?
 
 class ViewController: UITabBarController {
+    
+    var test: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,12 +63,23 @@ extension ViewController: SearchControllerDelegate {
         self.navigationItem.backBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(segueBack))
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    func segueBack() {
-        resultVC!.goBack()
+    func setUpResultBack() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(segueBackResult))
+    }
+    
+    func setUpProfileBack() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(segueBackProfile))
+    }
+    
+    func segueBackResult() {
+       resultVC!.goBack()
+    }
+    
+    func segueBackProfile() {
+        profileVC?.goBack()
     }
     
     func setNavBarTitle(name: String) {

@@ -14,6 +14,8 @@ protocol SearchControllerDelegate {
     func changeNavBarColor(color: UIColor)
     func hideNavBar()
     func setNavBarTitle(name: String)
+    func setUpResultBack()
+    func setUpProfileBack()
 }
 
 
@@ -156,6 +158,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let cell = cell as! SearchButtonsCell
         cell.setButton(num: indexPath.item + 1)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -164,9 +167,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return CGSize(width: width, height: height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        print("yo")
+//    }
     
     
     
