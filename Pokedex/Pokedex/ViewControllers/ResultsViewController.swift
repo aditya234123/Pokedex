@@ -10,14 +10,22 @@ import UIKit
 
 class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var minAttack: Int?
+    var minDefense: Int?
+    var minHealth: Int?
+    var searchBar: String?
+    
+    var pokemonArray = [Pokemon]()
+    var filteredArray = [Pokemon]()
+    
     var myTableView : UITableView!
     var reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
     
     let myArray: NSArray = ["First","Second","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third"]
-
+    
     var label: UILabel!
     var searchDelegate: SearchControllerDelegate?
-
+    
     override func viewDidLoad() {
         resultVC = self
         searchDelegate?.hideNavBar()
@@ -29,8 +37,54 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         view.backgroundColor = .white
         setUpSegmentControl()
         setUpTableView()
+        getPokemon()
         
-}
+    }
+    
+    func getPokemon() {
+        
+        pokemonArray = PokemonGenerator.getPokemonArray()
+        
+        if searchBar != "" {
+            for i in 0...(pokemonArray.count - 1) {
+                //search for name
+                let temp = pokemonArray[i]
+                let name = temp.name
+                if name?.range(of: searchBar!) != nil {
+                    filteredArray.append(temp)
+                    print(name)
+                }
+            }
+            
+        } else {
+            //category filters
+            
+            //types
+            for i in 0...(pokemonArray.count - 1) {
+                let temp = pokemonArray[i]
+                let type = temp.types
+                var single = true
+                for i in 0...(type.count - 1) {
+                    if (typeFilters.contains(type[i]) && single) {
+                        
+                        if (minAttack! < temp.attack && minDefense! < temp.defense && minHealth! < temp.health) {
+                            
+                            filteredArray.append(temp)
+                            single = false
+                            print(temp.name)
+                        }
+                    }
+                }
+            }
+            
+            
+            
+            
+            
+        }
+        
+    }
+    
     
     func setUpTableView(){
         
@@ -63,14 +117,14 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         self.navigationController?.popToRootViewController(animated: true)
     }
     
-        
-
+    
+    
     
     func setUpSegmentControl() {
         let items = ["Table", "Grid"]
         let segControl = UISegmentedControl(items: items)
         segControl.selectedSegmentIndex = 0
-    
+        
         segControl.frame = CGRect(x: 20, y:10, width: view.frame.width - 40, height: 40)
         
         segControl.layer.cornerRadius = 5.0
@@ -85,7 +139,7 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     }
     
     @objc func changeColor(sender: UISegmentedControl) {
- 
+        
         switch sender.selectedSegmentIndex {
         case 1:
             myTableView.isHidden = true

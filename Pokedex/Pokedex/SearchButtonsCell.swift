@@ -11,8 +11,9 @@ import UIKit
 class SearchButtonsCell: UICollectionViewCell {
  
     var button: UIButton!
+    var IndexPathNum: Int?
     
-    let numToType = [1 : "BUG", 2 : "DARK", 3 : "DRAGON", 4 : "ELECTRIC", 5 : "FAIRY", 6 : "FIGHTING", 7 : "FIRE", 8 : "FLYING", 9 : "GHOST", 10 : "GRASS", 11 : "GROUND", 12 : "ICE", 13 : "NORMAL", 14 : "POISON", 15 : "PSYCHIC", 16 : "ROCK", 17 : "STEEL", 18 : "WATER"]
+    let numToType = [1 : "Bug", 2 : "Dark", 3 : "Dragon", 4 : "Electric", 5 : "Fairy", 6 : "Fighting", 7 : "Fire", 8 : "Flying", 9 : "Ghost", 10 : "Grass", 11 : "Ground", 12 : "Ice", 13 : "Normal", 14 : "Poison", 15 : "Pyschic", 16 : "Rock", 17 : "Steel", 18 : "Water"]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,12 +25,13 @@ class SearchButtonsCell: UICollectionViewCell {
         
     }
     
+    
     func setButton(num: Int) {
         let strName = "\(num)"
         let image = UIImage(named: strName)
         self.button.setImage(image, for: .normal)
         button.imageEdgeInsets = UIEdgeInsets(top: 14, left: 24, bottom: 34, right: 24)
-        button.setTitle(numToType[num], for: .normal)
+        button.setTitle(numToType[num]?.uppercased(), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.titleLabel?.font = UIFont(name: "Copperplate-Light ", size: 13)
@@ -39,7 +41,21 @@ class SearchButtonsCell: UICollectionViewCell {
         button.backgroundColor = .white
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.borderWidth = 1
+        IndexPathNum = num
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
     }
+    
+    @objc func buttonPressed() {
+        if typeFilters.contains(numToType[IndexPathNum!]!) {
+            typeFilters.remove(at: typeFilters.index(of: numToType[IndexPathNum!]!)!)
+            button.backgroundColor = .white
+        } else {
+            typeFilters.append(numToType[IndexPathNum!]!)
+            button.backgroundColor = .red
+        }
+        print(typeFilters)
+    }
+    
     
     
     

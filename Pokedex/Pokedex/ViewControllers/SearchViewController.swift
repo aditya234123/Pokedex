@@ -8,6 +8,8 @@
 
 import UIKit
 
+var typeFilters = [String]()
+
 protocol SearchControllerDelegate {
     func changeNavBarColor(color: UIColor)
     func hideNavBar()
@@ -15,7 +17,7 @@ protocol SearchControllerDelegate {
 
 
 class SearchViewController: UIViewController {
-
+    
     var delegate: SearchControllerDelegate?
     var collectionView: UICollectionView!
     
@@ -23,15 +25,25 @@ class SearchViewController: UIViewController {
     var minDefense: UITextField!
     var minHealth: UITextField!
     
+    var scrollView: UIScrollView!
+    
     var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         delegate?.changeNavBarColor(color: UIColor.red)
+        setUpScrollView()
         setUpCollectionView()
         //setUpNavBar()
         setUpTextInput()
+    }
+    
+    func setUpScrollView() {
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.2)
+        scrollView.backgroundColor = .white
+        view.addSubview(scrollView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,9 +67,9 @@ class SearchViewController: UIViewController {
         minHealth.layer.borderWidth = 1
         minHealth.placeholder = "Minimum Health Points"
         
-        view.addSubview(minAttack)
-        view.addSubview(minDefense)
-        view.addSubview(minHealth)
+        scrollView.addSubview(minAttack)
+        scrollView.addSubview(minDefense)
+        scrollView.addSubview(minHealth)
     }
     
     func setUpNavBar() {
@@ -84,12 +96,28 @@ class SearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destVC  = segue.destination as? ResultsViewController
         destVC?.searchDelegate = self.delegate
+        if let temp = Int(minAttack.text!) {
+            destVC?.minAttack = temp
+        } else {
+            destVC?.minAttack = 0
+        }
+        if let temp = Int(minDefense.text!) {
+            destVC?.minDefense = temp
+        } else {
+            destVC?.minDefense = 0
+        }
+        if let temp = Int(minHealth.text!) {
+            destVC?.minHealth = temp
+        } else {
+            destVC?.minHealth = 0
+        }
+        destVC?.searchBar = searchBar.text
     }
     
     func setUpCollectionView() {
         view.backgroundColor = .white
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 5, right: 5)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5
         collectionView = UICollectionView(frame: CGRect(x: 0, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 120, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
@@ -99,7 +127,7 @@ class SearchViewController: UIViewController {
         //collectionView.backgroundColor = bgColor
         collectionView.backgroundColor = .white
         collectionView.register(SearchButtonsCell.self, forCellWithReuseIdentifier: "button")
-        view.addSubview(collectionView)
+        scrollView.addSubview(collectionView)
     }
     
 
@@ -131,6 +159,10 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let width = (view.frame.width / 4.0) - (25 / 4)
         let height = width
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
     
     
