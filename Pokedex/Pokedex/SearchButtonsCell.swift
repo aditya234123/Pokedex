@@ -10,6 +10,7 @@ import UIKit
 
 protocol searchButtonCellDelegate {
     func randomSegue()
+    func checkSearchButton()
 }
 
 class SearchButtonsCell: UICollectionViewCell {
@@ -37,7 +38,7 @@ class SearchButtonsCell: UICollectionViewCell {
         button.setTitle(numToType[num]?.uppercased(), for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.titleLabel?.font = UIFont(name: "Copperplate-Light ", size: 13)
+        button.titleLabel?.font = UIFont(name: "Copperplate-Light", size: 13)
         button.titleEdgeInsets = UIEdgeInsets(top: contentView.frame.height - 27, left: -(button.imageView?.image?.size.width)!, bottom: 10, right: 0)
         //let bgColor = UIColor(red: 24/255, green: 45/255, blue: 64/255, alpha: 1.0)
         //button.backgroundColor = bgColor
@@ -61,6 +62,7 @@ class SearchButtonsCell: UICollectionViewCell {
                 button.backgroundColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
                 button.setTitleColor(.white, for: .normal)
             }
+            searchCellDelegate?.checkSearchButton()
         }
         print(typeFilters)
     }

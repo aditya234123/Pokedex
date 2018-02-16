@@ -35,21 +35,31 @@ class SearchViewController: UIViewController {
     
     var random = false
     
+    var searchButton: UIButton!
+    var textFieldsInput = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         delegate?.changeNavBarColor(color: UIColor.red)
         setUpScrollView()
         setUpCollectionView()
-        //setUpNavBar()
+        setUpSearchButton()
         setUpTextInput()
         
     }
     
-    func elseTapped() {
-        print("test")
+    func setUpSearchButton() {
+        let reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
+        searchButton = UIButton(frame: CGRect(x: view.frame.width / 4, y: view.frame.height - (view.frame.height / 4) - 20, width: view.frame.width / 2, height: 50))
+        searchButton.backgroundColor = reddishColor
+        searchButton.setTitle("Search!", for: .normal)
+        searchButton.titleLabel?.font = UIFont(name: "Copperplate-Light", size: 20)
+        searchButton.setTitleColor(.white, for: .normal)
+        searchButton.layer.cornerRadius = 10
+        view.addSubview(searchButton)
     }
-    
+
     func setUpScrollView() {
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.2)
@@ -59,6 +69,7 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setUpNavBar()
+        searchButton.isHidden = true
     }
     
     func setUpTextInput() {
@@ -66,20 +77,20 @@ class SearchViewController: UIViewController {
         let reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
         
         minAttack = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20, width: view.frame.width - 40, height: 30))
-        
+        minAttack.delegate = self
         minAttack.selectedTitleColor = reddishColor
         minAttack.selectedLineColor = reddishColor
         
         minDefense = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 35, width: 
             view.frame.width - 40, height: 30))
-        
+        minDefense.delegate = self
         minDefense.selectedTitleColor = reddishColor
         minDefense.selectedLineColor = reddishColor
         
         minHealth = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 70, width: view.frame.width - 40, height: 30))
-        
         minHealth.selectedTitleColor = reddishColor
         minHealth.selectedLineColor = reddishColor
+        minHealth.delegate = self
         
         minAttack.placeholder = " Minimum Attack Points"
         minDefense.placeholder = " Minimum Defense Points"
@@ -202,17 +213,37 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     //    }
     
     
-    
-    
-    
 }
 
 extension SearchViewController: searchButtonCellDelegate {
+    
+    func checkSearchButton() {
+//        minAttack.endEditing(true)
+//        minDefense.endEditing(true)
+//        minHealth.endEditing(true)
+        if (typeFilters.count == 0) {
+            if textFieldsInput == false {
+                searchButton.isHidden = true
+            }
+        } else {
+            searchButton.isHidden = false
+        }
+    }
     
     func randomSegue() {
         random = true
         performSegue(withIdentifier: "toSearch", sender: self)
     }
+    
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textFieldsInput = true
+        searchButton.isHidden = false
+    }
+    
     
 }
 
