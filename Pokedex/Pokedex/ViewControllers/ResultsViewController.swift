@@ -8,51 +8,78 @@
 
 import UIKit
 
-class ResultsViewController: ViewController {
+class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var label: UILabel!
+    var myTableView : UITableView!
+    var reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
+    
+    let myArray: NSArray = ["First","Second","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third","Third"]
 
     override func viewDidLoad() {
         
         var delegate: SearchControllerDelegate?
         self.tabBarController?.tabBar.isHidden = true
         self.tabBar.isTranslucent = false
-        self.tabBar.barTintColor = .red
+        self.tabBar.barTintColor = reddishColor
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        //self.extendedLayoutIncludesOpaqueBars = true
         view.backgroundColor = .white
-        d()
+        setUpSegmentControl()
+        setUpTableView()
         
 }
-    func d () {
+    func setUpTableView(){
+
+        
+        myTableView = UITableView(frame: CGRect(x: 0, y: 60, width: view.frame.width, height: view.frame.height - 166))
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        myTableView.dataSource = self
+        myTableView.delegate = self
+        self.view.addSubview(myTableView)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        print("Value: \(myArray[indexPath.row])")
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return myArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
+        cell.textLabel!.text = "\(myArray[indexPath.row])"
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.black.cgColor
+        return cell
+    }
+    
+    func setUpSegmentControl() {
         let items = ["Table", "Grid"]
-        let customSC = UISegmentedControl(items: items)
-        customSC.selectedSegmentIndex = 0
+        let segControl = UISegmentedControl(items: items)
+        segControl.selectedSegmentIndex = 0
+    
+        segControl.frame = CGRect(x: 20, y:10, width: view.frame.width - 40, height: 40)
         
-        let frame = UIScreen.main.bounds
-        customSC.frame = CGRect(x:frame.minX + 10, y:frame.minY + 50, width: frame.width - 20, height: frame.height*0.1)
+        segControl.layer.cornerRadius = 5.0
+        segControl.layer.borderColor = UIColor.black.cgColor
+        segControl.layer.borderWidth = 1
+        segControl.backgroundColor = UIColor.white
+        segControl.tintColor = UIColor.red
         
-        customSC.layer.cornerRadius = 5.0
-        customSC.backgroundColor = UIColor.black
-        customSC.tintColor = UIColor.white
+        segControl.addTarget(self, action: #selector(changeColor(sender:)), for: .valueChanged)
         
-        customSC.addTarget(self, action: #selector(changeColor(sender:)), for: .valueChanged)
-        
-        self.view.addSubview(customSC)
+        self.view.addSubview(segControl)
     }
     
     @objc func changeColor(sender: UISegmentedControl) {
-        print("Change color handler is called.")
-        print("Changing Color to ")
+ 
         switch sender.selectedSegmentIndex {
         case 1:
-            self.view.backgroundColor = UIColor.green
-            print("Green")
-        case 2:
-            self.view.backgroundColor = UIColor.blue
-            print("Blue")
+            myTableView.isHidden = true
         default:
-            self.view.backgroundColor = UIColor.purple
-            print("Purple")
+            myTableView.isHidden = false
         }
     }
 }
