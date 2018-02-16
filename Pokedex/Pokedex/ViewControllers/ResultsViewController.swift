@@ -28,8 +28,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     override func viewDidLoad() {
         resultVC = self
-        searchDelegate?.hideNavBar()
-        searchDelegate?.setUpResultBack()
         self.tabBarController?.tabBar.isHidden = true
         self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = reddishColor
@@ -40,6 +38,11 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         setUpTableView()
         getPokemon()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        searchDelegate?.hideNavBar()
+        searchDelegate?.setUpResultBack()
     }
     
     func getPokemon() {
