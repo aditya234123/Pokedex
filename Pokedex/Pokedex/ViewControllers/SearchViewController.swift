@@ -46,7 +46,8 @@ class SearchViewController: UIViewController {
         setUpCollectionView()
         setUpSearchButton()
         setUpTextInput()
-        
+        searchButton.isHidden = true
+
     }
     
     func setUpSearchButton() {
@@ -58,6 +59,7 @@ class SearchViewController: UIViewController {
         searchButton.setTitleColor(.white, for: .normal)
         searchButton.layer.cornerRadius = 10
         view.addSubview(searchButton)
+        searchButton.addTarget(self, action: #selector(playPressed), for: .touchUpInside)
     }
 
     func setUpScrollView() {
@@ -69,7 +71,6 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setUpNavBar()
-        searchButton.isHidden = true
     }
     
     func setUpTextInput() {
