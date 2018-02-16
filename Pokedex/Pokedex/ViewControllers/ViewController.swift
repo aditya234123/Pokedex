@@ -8,6 +8,8 @@
 
 import UIKit
 
+var resultVC: ResultsViewController?
+
 class ViewController: UITabBarController {
     
     override func viewDidLoad() {
@@ -54,8 +56,16 @@ extension ViewController: SearchControllerDelegate {
     }
     
     func hideNavBar() {
-        let parent = self.parent as! UINavigationController
-        parent.navigationController?.isNavigationBarHidden = true
+        print("hiding nav bar")
+        self.navigationItem.backBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(segueBack))
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    func segueBack() {
+        resultVC!.goBack()
     }
 
 }

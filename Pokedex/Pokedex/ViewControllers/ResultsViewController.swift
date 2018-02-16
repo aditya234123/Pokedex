@@ -11,18 +11,23 @@ import UIKit
 class ResultsViewController: ViewController {
     
     var label: UILabel!
+    var searchDelegate: SearchControllerDelegate?
 
     override func viewDidLoad() {
-        
-        var delegate: SearchControllerDelegate?
+        resultVC = self
+        searchDelegate?.hideNavBar()
         self.tabBarController?.tabBar.isHidden = true
         self.tabBar.isTranslucent = false
         self.tabBar.barTintColor = .red
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
         view.backgroundColor = .white
         d()
         
 }
+    
+    func goBack() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     func d () {
         let items = ["Table", "Grid"]
         let customSC = UISegmentedControl(items: items)
