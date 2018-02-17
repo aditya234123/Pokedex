@@ -93,6 +93,8 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
         {
             let image: UIImage = UIImage(data: data)!
             cell.pokeButton.setImage(image, for: .normal)
+        } else {
+            cell.pokeButton.setImage(UIImage(named: "search"), for: .normal)
         }
         cell.pokeButton.setTitle(filteredArray[indexPath.row].name, for: .normal)
         if let temp = cell.pokeButton.imageView?.image?.size.width {

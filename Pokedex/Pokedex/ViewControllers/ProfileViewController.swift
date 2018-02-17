@@ -142,6 +142,10 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
     }
     
     func addToFavorites() {
+        let alert = UIAlertController(title: "Pokemon Added", message: pokemon.name + " has been saved to favorites", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
         favoritePokemon.append(self.pokemon.name)
         let defaults = UserDefaults.standard
         defaults.set(favoritePokemon, forKey: "savedPokemon")

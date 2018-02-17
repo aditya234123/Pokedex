@@ -49,6 +49,7 @@ class PokeButtonCell: UICollectionViewCell {
     }
     
     func initiateSegue() {
+        print("lol")
         pokeDelegate?.segue(num: IndexPathNum!)
     }
     
