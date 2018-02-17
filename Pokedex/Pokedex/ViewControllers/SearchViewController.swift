@@ -20,7 +20,7 @@ protocol SearchControllerDelegate {
     func removeNavBarTitle()
 }
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var delegate: SearchControllerDelegate?
     var collectionView: UICollectionView!
@@ -47,7 +47,7 @@ class SearchViewController: UIViewController {
         setUpSearchButton()
         setUpTextInput()
         searchButton.isHidden = true
-
+        
     }
     
     func setUpSearchButton() {
@@ -61,7 +61,7 @@ class SearchViewController: UIViewController {
         view.addSubview(searchButton)
         searchButton.addTarget(self, action: #selector(playPressed), for: .touchUpInside)
     }
-
+    
     func setUpScrollView() {
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.2)
@@ -83,7 +83,7 @@ class SearchViewController: UIViewController {
         minAttack.selectedTitleColor = reddishColor
         minAttack.selectedLineColor = reddishColor
         
-        minDefense = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 35, width: 
+        minDefense = SkyFloatingLabelTextField(frame: CGRect(x: 20, y: (self.navigationController?.navigationBar.frame.height)! - 20 + 35, width:
             view.frame.width - 40, height: 30))
         minDefense.delegate = self
         minDefense.selectedTitleColor = reddishColor
@@ -114,19 +114,50 @@ class SearchViewController: UIViewController {
         
         searchBar = UISearchBar(frame: CGRect(x: -1000, y: 0, width: view.frame.width - 70, height: 20))
         searchBar.placeholder = "Search for specific pokemon"
-        
+        searchBar.delegate = self
+        searchBar.showsCancelButton = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+    
+        view.addGestureRecognizer(tap)
     }
+        
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        searchBar.showsCancelButton = false
+        
+        // Remove focus from the search bar.
+        searchBar.endEditing(true)
+        
+        // Perform any necessary work.  E.g., repopulating a table view
+        // if the search bar performs filtering.
+        self.searchDisplayController?.setActive(false, animated: true)
+    }
+    func searchBarSearchButtonClicked( _ searchBar: UISearchBar!)
+    {
+        performSegue(withIdentifier: "toSearch", sender: self)
+    }
+
     
     func searchIconPressed() {
         var temp = UIBarButtonItem(customView: searchBar)
         self.tabBarController?.navigationItem.leftBarButtonItem = temp
         let image = UIImage(named: "play")
         let tintedImage = image?.withRenderingMode(.alwaysTemplate)
-        let rightBarButtonIcon = UIBarButtonItem(image: tintedImage, style: .plain, target: self, action: #selector(playPressed))
         UIView.animate(withDuration: 0.5) {
             self.searchBar.frame.origin.x = 1000
-            self.tabBarController?.navigationItem.rightBarButtonItem = rightBarButtonIcon
             self.tabBarController?.navigationItem.rightBarButtonItem?.tintColor = .white
+        
+            
+        
         }
     }
     
@@ -221,9 +252,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 extension SearchViewController: searchButtonCellDelegate {
     
     func checkSearchButton() {
-//        minAttack.endEditing(true)
-//        minDefense.endEditing(true)
-//        minHealth.endEditing(true)
+        //        minAttack.endEditing(true)
+        //        minDefense.endEditing(true)
+        //        minHealth.endEditing(true)
         if (typeFilters.count == 0) {
             if textFieldsInput == false {
                 searchButton.isHidden = true
@@ -246,8 +277,6 @@ extension SearchViewController: UITextFieldDelegate {
         textFieldsInput = true
         searchButton.isHidden = false
     }
-    
-    
 }
 
 

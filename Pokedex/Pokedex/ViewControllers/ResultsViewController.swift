@@ -43,6 +43,16 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         self.myCollectionView.isHidden = true
         getPokemon()
         
+        if filteredArray.count == 0 {
+            noPokemonFoundAlert()
+        }
+        
+    }
+    
+    func noPokemonFoundAlert(){
+        let alert = UIAlertController(title: "Search Again", message:"Sorry, No Pokemon Found", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
