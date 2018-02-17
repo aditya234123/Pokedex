@@ -37,3 +37,7 @@ selected pokemon are layed out and you can click them to again see more about th
 
 ![simulator screen shot - iphone 8 - 2018-02-16 at 21 09 37](https://user-images.githubusercontent.com/17814417/36338243-b647c9dc-135e-11e8-92ae-9aa96d05e6b0.png)
 
+
+# Created By
+
+Aditya Yadav and Ethan Wong
