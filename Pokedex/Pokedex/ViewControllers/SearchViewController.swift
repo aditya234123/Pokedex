@@ -70,6 +70,7 @@ class SearchViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        delegate?.hideNavBar()
         setUpNavBar()
     }
     

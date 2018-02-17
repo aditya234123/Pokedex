@@ -26,6 +26,7 @@ class ViewController: UITabBarController {
         searchViewController.delegate = self
         
         let favoritesViewController = FavoritesViewController()
+        favoritesViewController.favDelegate = self
         let favNavController = UINavigationController(rootViewController: favoritesViewController)
         favNavController.tabBarItem.title = "Favorites"
         favNavController.tabBarItem.image = UIImage(named: "star")
@@ -63,6 +64,7 @@ extension ViewController: SearchControllerDelegate {
         self.navigationItem.backBarButtonItem = nil
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.title = nil
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -93,6 +95,21 @@ extension ViewController: SearchControllerDelegate {
         self.title = nil
     }
 
+}
+
+extension ViewController: favoritesVCDelegate {
+ 
+    func hideNavBarFavorites() {
+        print("hiding nav bar!!")
+        self.navigationItem.backBarButtonItem = nil
+        self.navigationItem.leftBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.title = "Favorites"
+        self.navigationController?.navigationBar.tintColor = .white
+        //self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    
 }
     
 
