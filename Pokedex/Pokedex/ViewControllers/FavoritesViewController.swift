@@ -21,6 +21,9 @@ class FavoritesViewController: UIViewController {
     var collectionView: UICollectionView!
     
     var favDelegate: favoritesVCDelegate?
+    var searchDelegate: SearchControllerDelegate?
+    
+    var pokeIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +90,7 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
          let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PokeButtonCell
         cell.awakeFromNib()
+        cell.pokeDelegate = self
         cell.setButton(num: indexPath.row)
         let url = URL(string: filteredArray[indexPath.row].imageUrl)
         if let data = try? Data(contentsOf: url!)
@@ -111,9 +115,24 @@ extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewD
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let DestVC = segue.destination as! ProfileViewController
+        profileVC = DestVC
+        print(pokeIndex)
+        DestVC.pokemon = filteredArray[pokeIndex!]
+        DestVC.searchDelegate = self.searchDelegate
+    }
     
     
-    
-    
+}
+
+
+extension FavoritesViewController: pokeButtonCellDelegate {
+    func segue(num: Int) {
+        pokeIndex = num
+        print("segueing")
+        //performSegue(withIdentifier: "favToProfile", sender: self)
+        performSegue(withIdentifier: "favToProfile", sender: self)
+    }
     
 }

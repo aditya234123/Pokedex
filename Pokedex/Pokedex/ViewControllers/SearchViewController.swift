@@ -113,6 +113,7 @@ class SearchViewController: UIViewController {
         self.tabBarController?.navigationItem.leftBarButtonItem?.tintColor = .white
         
         searchBar = UISearchBar(frame: CGRect(x: -1000, y: 0, width: view.frame.width - 70, height: 20))
+        searchBar.placeholder = "Search for specific pokemon"
         
     }
     

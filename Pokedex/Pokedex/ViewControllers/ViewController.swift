@@ -25,11 +25,12 @@ class ViewController: UITabBarController {
         searchNavController.tabBarItem.image = UIImage(named: "filter")
         searchViewController.delegate = self
         
-        let favoritesViewController = FavoritesViewController()
+        let favoritesViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "favorites") as! FavoritesViewController
         favoritesViewController.favDelegate = self
         let favNavController = UINavigationController(rootViewController: favoritesViewController)
         favNavController.tabBarItem.title = "Favorites"
         favNavController.tabBarItem.image = UIImage(named: "star")
+        favoritesViewController.searchDelegate = self
         
         //let bgColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
         self.tabBar.barTintColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
