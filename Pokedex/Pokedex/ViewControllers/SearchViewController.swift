@@ -18,6 +18,7 @@ protocol SearchControllerDelegate {
     func setUpResultBack()
     func setUpProfileBack()
     func removeNavBarTitle()
+    func segueBackResult()
 }
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
@@ -52,7 +53,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     func setUpSearchButton() {
         let reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
-        searchButton = UIButton(frame: CGRect(x: view.frame.width / 4, y: view.frame.height - (view.frame.height / 4) - 20, width: view.frame.width / 2, height: 50))
+        searchButton = UIButton(frame: CGRect(x: view.frame.width / 4, y: view.frame.height - (view.frame.height / 4) - 50, width: view.frame.width / 2, height: 50))
         searchButton.backgroundColor = reddishColor
         searchButton.setTitle("Search!", for: .normal)
         searchButton.titleLabel?.font = UIFont(name: "Copperplate-Light", size: 20)
@@ -115,7 +116,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         searchBar = UISearchBar(frame: CGRect(x: -1000, y: 0, width: view.frame.width - 70, height: 20))
         searchBar.placeholder = "Search for specific pokemon"
         searchBar.delegate = self
-        searchBar.showsCancelButton = true
+        searchBar.barTintColor = .white
+        searchBar.tintColor = .white
+        searchBar.showsCancelButton = false
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
     
         view.addGestureRecognizer(tap)

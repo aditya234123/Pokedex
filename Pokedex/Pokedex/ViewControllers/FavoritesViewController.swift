@@ -33,7 +33,7 @@ class FavoritesViewController: UIViewController {
     func getPokemon() {
         
         let defaults = UserDefaults.standard
-        let savedNames = defaults.object(forKey: "savedPokemon") as! [String]
+        if let savedNames = defaults.object(forKey: "savedPokemon") as? [String] {
         
         pokemonArray = PokemonGenerator.getPokemonArray()
         for i in 0...(pokemonArray.count - 1) {
@@ -43,6 +43,7 @@ class FavoritesViewController: UIViewController {
             }
         }
         
+        }
     }
     
     

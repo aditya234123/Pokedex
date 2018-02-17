@@ -139,7 +139,7 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
     func createFavButton(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        addFavButton = UIButton(frame: CGRect(x: vfw * 0.04, y: vfh * 0.33, width: 170, height: 40))
+        addFavButton = UIButton(frame: CGRect(x: (20 / 3), y: vfh * 0.33, width: vfw / 2 - 10, height: 40))
         addFavButton.setTitle("Add to Favorites", for: .normal)
         addFavButton.layer.cornerRadius = 10
         //append pokemon to favorites array if pressed.
@@ -161,7 +161,7 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
     func createWebButton(){
         let vfw = view.frame.width
         let vfh = view.frame.height
-        toWebButton = UIButton(frame: CGRect(x: vfw * 0.52, y: vfh * 0.33, width: 170, height: 40))
+        toWebButton = UIButton(frame: CGRect(x: (2 * (20 / 3)) + (vfw / 2 - 10), y: vfh * 0.33, width: vfw / 2 - 10, height: 40))
         toWebButton.setTitle("Search on Web", for: .normal)
         toWebButton.layer.cornerRadius = 10
         toWebButton.backgroundColor = UIColor(red: 18/255, green: 33/255, blue: 49/255, alpha: 1.0)
@@ -206,12 +206,13 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         view.addSubview(pokeNum)
         
         //Species
-        let pokeSpeciesText : NSString = "Species: \n \n \(pokemon.species!)" as NSString
+        let pokeSpeciesText : NSString = "Species: \n \(pokemon.species!)" as NSString
         let range1 = (pokeSpeciesText).range(of: "Species:")
         let attribute1 = NSMutableAttributedString.init(string: pokeSpeciesText as String)
         attribute1.addAttribute(NSForegroundColorAttributeName, value: UIColor.red , range: range1)
         pokeSpecies = UILabel(frame: CGRect(x: vfw * 0.45, y: vfh * 0.07, width: 200, height: 100))
         pokeSpecies.numberOfLines = 0
+        pokeSpecies.adjustsFontSizeToFitWidth = true
         pokeSpecies.attributedText = attribute1
         view.addSubview(pokeSpecies)
         

@@ -51,8 +51,11 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
     
     func noPokemonFoundAlert(){
         let alert = UIAlertController(title: "Search Again", message:"Sorry, No Pokemon Found", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        //alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            self.searchDelegate?.segueBackResult()
+        }))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,13 +71,31 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         if !random {
             
             if searchBar != "" {
-                for i in 0...(pokemonArray.count - 1) {
-                    //search for name
-                    let temp = pokemonArray[i]
-                    let name = temp.name
-                    if name?.range(of: searchBar!) != nil {
-                        filteredArray.append(temp)
+                
+                if let num = Int(searchBar!) {
+                    // number entered
+                    
+                    for i in 0...(pokemonArray.count - 1) {
+                        let temp = pokemonArray[i]
+                        let pokeNum = temp.number
+                        if num == pokeNum {
+                            filteredArray.append(temp)
+                        }
                     }
+                    
+                } else {
+                    
+                    
+                    
+                    for i in 0...(pokemonArray.count - 1) {
+                        //search for name
+                        let temp = pokemonArray[i]
+                        let name = temp.name
+                        if name?.range(of: searchBar!) != nil {
+                            filteredArray.append(temp)
+                        }
+                    }
+                    
                 }
                 
             } else {
@@ -96,10 +117,6 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
                         }
                     }
                 }
-                
-                
-                
-                
                 
             }
             

@@ -277,7 +277,7 @@
 				TargetAttributes = {
 					3CFC6F0A1D98716000B4EBB5 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 57X26AKKKU;
+						DevelopmentTeam = 9UR5Y693WD;
 						ProvisioningStyle = Automatic;
 					};
 					3CFC6F1E1D98716000B4EBB5 = {
@@ -660,10 +660,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 57X26AKKKU;
+				DEVELOPMENT_TEAM = 9UR5Y693WD;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.mdb.Pokedex;
+				PRODUCT_BUNDLE_IDENTIFIER = org.mdbproj2.Pokedex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -675,10 +675,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 57X26AKKKU;
+				DEVELOPMENT_TEAM = 9UR5Y693WD;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.mdb.Pokedex;
+				PRODUCT_BUNDLE_IDENTIFIER = org.mdbproj2.Pokedex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
