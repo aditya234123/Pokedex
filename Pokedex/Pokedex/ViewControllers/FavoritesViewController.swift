@@ -108,9 +108,16 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         return 60;
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let DestVC = segue.destination as! ProfileViewController
+        profileVC = DestVC
+        DestVC.pokemon = filteredArray[pokeIndex!]
+        DestVC.searchDelegate = self.searchDelegate
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         pokeIndex = indexPath.row
-        performSegue(withIdentifier: "toProfile", sender: self)
+        performSegue(withIdentifier: "favToProfile", sender: self)
     }
     
 }
