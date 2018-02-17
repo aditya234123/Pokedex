@@ -167,8 +167,8 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         pokeImage = UIImageView(frame: CGRect(x: 0, y: 80, width: 180, height: 180))
         
         //add image url
-        let url = URL(string:pokemon.imageUrl)
-        if let data = try? Data(contentsOf: url!)
+        if let url = URL(string:pokemon.imageUrl) {
+        if let data = try? Data(contentsOf: url)
         {
             let image: UIImage = UIImage(data: data)!
             self.pokeImage.image = image
@@ -176,6 +176,9 @@ class ProfileViewController: UIViewController, UIWebViewDelegate, SFSafariViewCo
         
         pokeImage.contentMode = .scaleAspectFit
         view.addSubview(pokeImage)
+        } else {
+            self.pokeImage.image = UIImage(named: "search")
+        }
     }
     
     
