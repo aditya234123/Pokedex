@@ -18,7 +18,7 @@ class FavoritesViewController: UIViewController {
     var pokemonArray = [Pokemon]()
     var filteredArray = [Pokemon]()
     
-    var collectionView: UICollectionView!
+    var myTableView: UITableView!
     
     var favDelegate: favoritesVCDelegate?
     var searchDelegate: SearchControllerDelegate?
@@ -27,7 +27,7 @@ class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpCollectionView()
+        setUpmyTableView()
     }
     
     func getPokemon() {
@@ -51,22 +51,18 @@ class FavoritesViewController: UIViewController {
         getPokemon()
         favDelegate?.hideNavBarFavorites()
         self.navigationController?.navigationBar.isHidden = true
-        collectionView.reloadData()
+        myTableView.reloadData()
     }
     
-    func setUpCollectionView() {
+    func setUpmyTableView() {
         view.backgroundColor = .white
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-        layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 5
-        collectionView = UICollectionView(frame: CGRect(x: 0, y: 5, width: view.frame.width, height: view.frame.height), collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(PokeButtonCell, forCellWithReuseIdentifier: "cell")
+        myTableView = UITableView(frame: CGRect(x: 0, y: 5, width: view.frame.width, height: view.frame.height))
+        myTableView.backgroundColor = .white
+        myTableView.dataSource = self
+        myTableView.delegate = self
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
         
-        view.addSubview(collectionView)
+        view.addSubview(myTableView)
         
     }
 
@@ -80,59 +76,41 @@ class FavoritesViewController: UIViewController {
 
 
 
-extension FavoritesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredArray.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PokeButtonCell
-        cell.awakeFromNib()
-        cell.pokeDelegate = self
-        cell.setButton(num: indexPath.row)
-        let url = URL(string: filteredArray[indexPath.row].imageUrl)
-        if let data = try? Data(contentsOf: url!)
-        {
-            let image: UIImage = UIImage(data: data)!
-            cell.pokeButton.setImage(image, for: .normal)
-        } else {
-            cell.pokeButton.setImage(UIImage(named: "search"), for: .normal)
-        }
-        cell.pokeButton.setTitle(filteredArray[indexPath.row].name, for: .normal)
-        if let temp = cell.pokeButton.imageView?.image?.size.width {
-            cell.pokeButton.titleEdgeInsets = UIEdgeInsets(top: cell.contentView.frame.height - 27, left: -temp, bottom: 10, right: 0)
-        } 
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
         return cell
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.width / 3) - 8
-        let height = width
-        return CGSize(width: width, height: height)
-        
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let url = URL(string:filteredArray[indexPath.item].imageUrl)
+        if url != nil {
+            if let data = try? Data(contentsOf: url!)
+            {
+                let image: UIImage = UIImage(data: data)!
+                cell.imageView?.image = image
+            } else {
+                cell.imageView?.image = UIImage(named: "search")
+            }
+        }
+        cell.textLabel?.text = "No. \(filteredArray[indexPath.item].number!) " + filteredArray[indexPath.item].name
+        cell.textLabel?.textAlignment = .center
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let DestVC = segue.destination as! ProfileViewController
-        profileVC = DestVC
-        print(pokeIndex)
-        DestVC.pokemon = filteredArray[pokeIndex!]
-        DestVC.searchDelegate = self.searchDelegate
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 60;
     }
     
-    
-}
-
-
-extension FavoritesViewController: pokeButtonCellDelegate {
-    func segue(num: Int) {
-        pokeIndex = num
-        print("segueing")
-        //performSegue(withIdentifier: "favToProfile", sender: self)
-        performSegue(withIdentifier: "favToProfile", sender: self)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        pokeIndex = indexPath.row
+        performSegue(withIdentifier: "toProfile", sender: self)
     }
     
 }

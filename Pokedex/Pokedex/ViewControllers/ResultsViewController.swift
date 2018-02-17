@@ -172,6 +172,7 @@ class ResultsViewController: ViewController, UITableViewDelegate, UITableViewDat
         }
         cell.textLabel?.text = "No. \(filteredArray[indexPath.item].number!) " + filteredArray[indexPath.item].name
         cell.textLabel?.textAlignment = .center
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
     }
     
     func goBack() {
