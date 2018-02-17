@@ -48,8 +48,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         setUpSearchButton()
         setUpTextInput()
         searchButton.isHidden = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+
+        view.addGestureRecognizer(tap)
         
     }
+
     
     func setUpSearchButton() {
         let reddishColor : UIColor = UIColor(red: 217/255, green: 30/255, blue: 24/255, alpha: 1.0)
@@ -280,6 +284,13 @@ extension SearchViewController: UITextFieldDelegate {
         textFieldsInput = true
         searchButton.isHidden = false
     }
+
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
 }
 
 
